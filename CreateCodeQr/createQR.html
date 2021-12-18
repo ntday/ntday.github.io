@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo QR</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../main.css">
+    <script src="./js/qrcode.js" defer></script>
+    <script src="./js/script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <a href="../index.html"> <img class="aicon" src="../gallery/icon.png" alt="Phèn Coder" >
+      </a>
+        
+    </header>
+    <nav>
+        <div id="menu">
+            <ul>
+                <li> <a href="../index.html" target="_black">HOME</a> </li>
+                <li> <a href="#">CODE C</a></li>
+                <li> <a href="#">CODE C++</a></li>
+                <li> <a href="#">CODE JAVA</a></li>
+                <li> <a href="#">CV</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section>
+     <div class="main" id="main">
+        <input type="text" class="dataBox" name="data" placeholder="Nhập Vào Nội Dung" id="dataBox" value=""
+            autocomplete="false">
+        <button class="btn" id="generateBtn">Tạo QR</button>
+        <div class="qrdiv hide" id="qrdiv">
+            <div class="qrcode" id="qrcode"></div>
+            <button class="downloadBtn" id="downloadBtn">Tải Xuốn QR</button>
+        </div>
+     </div>
+
+    </section>
+    <footer>
+        <div id="in4">
+                <p>liên hệ góp ý Email: phencoder95@protonmail.com</p>
+                <ul>
+                    <li><a href="https://www.facebook.com/profile.php?id=100044753243981" target="_black"> <img src="../gallery/Facebook-icon.png" alt="facebook"></a>
+                    </li>
+                    <li><a href="https://twitter.com/NTDay140902" target="_black"> <img src="../gallery/Twitter-icon.png" alt="Twitter"></a>
+                    </li>
+                </ul>
+            </div>
+    </footer>
+</body>
+
+</html>
