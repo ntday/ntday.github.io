@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Bài tập javascript 2</title>
+	<link rel="stylesheet" type="text/css" href="1.css">	
+        <style>
+          .khoi{
+	       display: flex;
+	       justify-content: center;
+	       align-items: center;
+	       width:400px;
+	       height: 200px;
+	       border: solid 2px red;	
+}
+        </style>
+</head>
+<body>
+		<button>Click me</button>
+		<div class="khoi" > 
+ 			<h4>Chuyển động</h4>
+		</div>
+		<script type="text/javascript" src="1.js"></script>
+</body>
+</html>
+
+
+Css------------------------------------------------
+
+.chuyendong1{
+	animation: chuyendong1 2s forwards ;
+}
+@-webkit-keyframes chuyendong1{
+	0%{transform: translateX(0);margin-top: 0;}
+	30%{transform: translateX(200px);margin-top: 0;}
+	60%{transform: translateX(200px);margin-top:100px;}
+	100%{transform: translateX(400px);margin-top: 100px;}
+}
+/*Khi click lần 1*/
+.chuyendong2{
+	animation: chuyendong2 2s forwards;
+}
+@-webkit-keyframes chuyendong2{
+	100%{transform: translateX(0);margin-top: 0;}
+	60%{transform: translateX(200px);margin-top: 0;}
+	30%{transform: translateX(200px);margin-top: 100px;}
+	0%{transform: translateX(400px);margin-top: 100px;}
+}
+/*Khi click lần 2*/
+
+
+javasrip--------------------------------------------------------
+
+document.addEventListener("DOMContentLoaded", function(){
+	var nut = document.getElementsByTagName('button');
+	var khoi = document.getElementsByTagName('div');
+	var trangthai = "click1";
+	nut[0].onclick = function(){
+		if(trangthai == "click1"){
+                        khoi[0].classList.remove('chuyendong2');
+			khoi[0].classList.add('chuyendong1');
+			trangthai = "click2";
+		}
+		else if(trangthai=="click2"){
+			khoi[0].classList.remove('chuyendong1');
+                        khoi[0].classList.add('chuyendong2');
+			trangthai = "click1";
+     
+		}
+	}
+},false)
+
+
+
+
+document.addEventListener("DOMContentLoaded",function(){
+    var nut = document.getElementsByTagName('button');
+    var khoi = document.getElementById('to');
+    
+    var trangthai = "click1";
+    nut.onclick = function(){
+        if(trangthai == "click1"){
+            khoi.classList.remove('chuyenDong2');
+       khoi.classList.add('chuyenDong1');
+        trangthai = "click2";
+        }
+        else if(trangthai=="click2"){
+        khoi.classList.remove('chuyenDong1');
+            khoi.classList.add('chuyenDong2');
+                trangthai = "click1";
+
+}
+    }
+
+},false)
+
+
+
+
+
+
+
+function up(){
+  var tong;
+
+  const kq1 = Math.floor(Math.random()*6)+1;
+  const anhKQ1 = `images/dice${kq1}.png`;
+  document.getElementById('ketQua1').setAttribute('src',anhKQ1);
+
+  const kq2 = Math.floor(Math.random()*6)+1;
+  const anhKQ2 = `images/dice${kq2}.png`;
+  document.getElementById('ketQua2').setAttribute('src',anhKQ2);
+
+  const kq3 = Math.floor(Math.random()*6)+1;
+  const anhKQ3 = `images/dice${kq3}.png`;
+  document.getElementById('ketQua3').setAttribute('src',anhKQ3);
+
+  tong = kq1+kq2+kq3;
+  if(tong>=4 && tong<=10){
+    setTimeout(() => {
+        document.getElementById("inKetQua").innerHTML = tong+" điểm: Xỉu";
+    },1000);
+   
+}
+else if(tong>=11 && tong<=17){
+    setTimeout(() => {
+        document.getElementById("inKetQua").innerHTML = tong+" điểm: Tài";
+    },1000);
+    
+}
+else{
+    setTimeout(() => {
+        document.getElementById("inKetQua").innerHTML = tong+" điểm: ngoại lệ cái ăn hết";
+    },1000);
+    
+}
+}

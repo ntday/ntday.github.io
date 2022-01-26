@@ -1,0 +1,82 @@
+*{
+    margin:0; padding:0; 
+    font-family: 'Acme', sans-serif;
+}
+
+#main{
+    width: 1000px;
+    margin: auto;
+    text-align: center;
+    }
+    h1{
+    margin: 30px;
+    text-shadow: 5px 5px rgb(250, 248, 126);
+    font-size: 3rem;
+    color: #eb1616; 
+    }
+
+    #xucXac img{
+        width: 15%;
+        padding: 5px;
+    }
+    .dia{
+     background-image: url(./images/caidia.jpg);
+     background-repeat: no-repeat;
+     width: 500px;
+     height: 400px;
+     padding-top: 210px;
+     float: left;
+    }
+ h4{
+    font-size: 1.7rem; color: #ec3700; 
+   text-shadow: 1px 1px white;
+ }
+ button{
+    padding:20px; background-color:#da5518; color: white;
+        border:none;
+        font-weight: bold;
+        font-size: 1em;
+        letter-spacing: 0.1em;
+        text-decoration: none;
+        color: #ffffff;
+        display: inline-block;
+        padding: 10px 40px 10px 40px;
+        position: relative;
+        border: 3px solid #ffffff;
+        border-radius: 20px;
+ }   
+button:hover{
+   color: rgb(228, 238, 84);
+    }
+    #to img{
+         width: 500px;
+         
+    }
+    #to{
+        position: relative;
+    }
+#mainToDia{
+    cursor: pointer;
+}
+ #mainNut{
+     padding-top: 3cm;
+     
+ }
+    .chuyenDong1{
+        animation: chuyenDong1 1s forwards;
+   }
+   
+@keyframes chuyenDong1{
+  0%{ left: 0px;}
+  100%{ left: -500px;}
+}
+
+.chuyenDong2{
+	animation: chuyenDong2 4s forwards;
+}
+@keyframes chuyenDong2{
+    100%{ left: 0px;}
+    0%{ left: -500px;}
+  }
+
+
