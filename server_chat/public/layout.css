@@ -1,0 +1,44 @@
+*{
+    background-color: aliceblue;
+}
+
+#wrapper{
+    width: 1000px;
+    margin: auto;
+}
+#left, #right{
+    min-height: 300px;
+}
+#left{
+    width: 30%;
+    float: left;
+    /* background-color: beige; */
+}
+#right{
+    width: 70%;
+    float: right;
+    background-color: rgb(178, 244, 172);
+}
+#boxTitle{
+    border: solid 1px black;
+    padding: 5px;
+    text-align: center;
+}
+#boxContent{
+    border: solid 1px black;
+    border-top: none;
+    text-align: center;
+    padding: 5px;
+}
+#sayHi{
+    text-align: right;
+}
+#LisMessages{
+    height: 200px;
+    background-color: rgb(140, 141, 131);
+    margin-bottom: 15px;
+}
+#txtMessage{
+    background-color: transparent;
+    border: solid 1px black;
+}
