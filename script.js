@@ -444,7 +444,3 @@ map.on('contextmenu', function (e) {
     }
 
 });
-
-
-
-
