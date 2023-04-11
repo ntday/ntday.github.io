@@ -1,1 +1,80 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>React App</title><script defer="defer" src="/static/js/main.5bf58f76.js"></script><link href="/static/css/main.10b39e4a.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bản đồ</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- thư viện "api" của  leaflet map-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <!-- thư viện tìm đường đi giữa hai điểm đã chọn -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="map" class="map"></div>
+
+        <div class="box-menu">
+            <div class="menu-map">
+                <button onclick="timD()"><i class="gg-search" ></i></button>
+                <button class="imageEdit" onclick="thongtin()"><img src="./image/information-logotype-in-a-circle.png" alt=""></button>
+                <button onclick="chiD()"><img src="./image/directions-2x-20150909.png" alt=""></button>
+                <button class="imageEdit" onclick="reset()"><img src="./image/reset.png" alt=""></button>
+            </div>
+            <div class="info-map" id="timDiaChi">
+                <div class="box-input">
+                    <input type="text" id="diemCanTim" onchange="timKiemTen2()" placeholder="tìm kiếm trên map">
+                    <button id="btn_tk" onclick="timKiemTen()" ><i class="gg-search"></i></button>
+                </div>
+                <div >
+                    <ul id="danhSachGoiY" class="dsGoiY"></ul>
+                </div>
+            </div>
+            <div class="info-map" id="thongTin_box">
+                <div class="box-thongtin">
+                    <div id="thongtinVT" class="dsGoiY">chọn một điểm bất kỳ trên map</div>
+                </div>
+            </div>
+            <div class="info-map" id="chiDuong">
+                <div class="box-input">
+                    <input type="text" id="diemBD" onchange="timKiemTenBD2()" placeholder="chọn điểm bắt đầu">
+                    <!-- <button id="btn_DBD" onclick="timKiemTenDB()" ><i class="gg-search"></i></button> -->
+                </div>
+                <div >
+                    <ul id="danhSachGoiYVT1" class="dsGoiY"></ul>
+                </div>
+
+                <div class="box-input">
+                    <input type="text"  id="diemKT" onchange="timKiemTenDKT2()"  placeholder="chọn điểm đến">
+                </div>
+                <ul id="danhSachGoiYVT2" class="dsGoiY"> </ul>
+                <div class="box-input">
+                    <input onclick="timDuongDi()" type="button" value="bắt đầu"></input>
+                </div>
+                <div class="box-input">
+                    <div id="huongDan"></div>
+                </div>
+                  <hr>
+
+                <!-- <div class="box-input">
+                    <input type="button"  id="viTriHienTai" value="lấy vị trí hiện tại">
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
