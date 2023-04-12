@@ -6,15 +6,168 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bản đồ</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        html,
+        body {
+            overflow: hidden;
+        }
 
-    <!-- thư viện "api" của  leaflet map-->
+        .container {
+            position: relative;
+        }
+
+        #map {
+            height: 600px;
+            width: 1024px;
+            cursor: default;
+            margin: auto;
+        }
+
+        .box-menu {
+
+            position: absolute;
+            top: 0px;
+            z-index: 999;
+            left: 0px;
+            background-color: rgba(255, 255, 255, 0.456);
+
+        }
+
+        .menu-map {
+            background-color: rgba(140, 138, 138, 0.475);
+            height: 90px;
+            width: 400px;
+        }
+
+        #timDiaChi {
+            display: none;
+        }
+
+        #thongtinVT {
+            background-color: #ffffff;
+        }
+
+        #chiDuong {
+            display: none;
+        }
+
+        #thongTin_box {
+            display: none;
+        }
+
+        .info-map {
+            background-color: rgba(255, 255, 255, 0.395);
+            height: 100px;
+            width: 400px;
+        }
+
+
+
+        .box-input {
+            display: flex;
+        }
+
+        .box-input button {
+            background-color: rgba(255, 255, 255, 0);
+            border: none;
+            display: flex;
+            width: 50px;
+            justify-content: center;
+            align-self: center;
+        }
+
+        .box-input i:hover {
+            transform: scale(1.2);
+        }
+
+        .box-input input[type="text"] {
+            height: 30px;
+            width: 90%;
+            margin: 5px;
+            font-size: 15px;
+        }
+
+        .menu-map {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .menu-map button {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /*  */
+
+        .chu {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .dsGoiY {
+            z-index: 9999;
+            position: absolute;
+        }
+
+        .imageEdit img {
+            width: 25px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: aliceblue;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        li:hover {
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+
+        /*  */
+
+        /*  */
+        .gg-search {
+            box-sizing: border-box;
+            position: relative;
+            display: block;
+            transform: scale(var(--ggs, 1));
+            width: 16px;
+            height: 16px;
+            border: 2px solid;
+            border-radius: 100%;
+            margin-left: -4px;
+            margin-top: -4px
+        }
+
+        .gg-search::after {
+            content: "";
+            display: block;
+            box-sizing: border-box;
+            position: absolute;
+            border-radius: 3px;
+            width: 2px;
+            height: 8px;
+            background: currentColor;
+            transform: rotate(-45deg);
+            top: 10px;
+            left: 12px
+        }
+    </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-
-    <!-- thư viện tìm đường đi giữa hai điểm đã chọn -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
@@ -27,17 +180,18 @@
 
         <div class="box-menu">
             <div class="menu-map">
-                <button onclick="timD()"><i class="gg-search" ></i></button>
-                <button class="imageEdit" onclick="thongtin()"><img src="./image/information-logotype-in-a-circle.png" alt=""></button>
+                <button onclick="timD()"><i class="gg-search"></i></button>
+                <button class="imageEdit" onclick="thongtin()"><img src="./image/information-logotype-in-a-circle.png"
+                        alt=""></button>
                 <button onclick="chiD()"><img src="./image/directions-2x-20150909.png" alt=""></button>
                 <button class="imageEdit" onclick="reset()"><img src="./image/reset.png" alt=""></button>
             </div>
             <div class="info-map" id="timDiaChi">
                 <div class="box-input">
                     <input type="text" id="diemCanTim" onchange="timKiemTen2()" placeholder="tìm kiếm trên map">
-                    <button id="btn_tk" onclick="timKiemTen()" ><i class="gg-search"></i></button>
+                    <button id="btn_tk" onclick="timKiemTen()"><i class="gg-search"></i></button>
                 </div>
-                <div >
+                <div>
                     <ul id="danhSachGoiY" class="dsGoiY"></ul>
                 </div>
             </div>
@@ -51,12 +205,12 @@
                     <input type="text" id="diemBD" onchange="timKiemTenBD2()" placeholder="chọn điểm bắt đầu">
                     <!-- <button id="btn_DBD" onclick="timKiemTenDB()" ><i class="gg-search"></i></button> -->
                 </div>
-                <div >
+                <div>
                     <ul id="danhSachGoiYVT1" class="dsGoiY"></ul>
                 </div>
 
                 <div class="box-input">
-                    <input type="text"  id="diemKT" onchange="timKiemTenDKT2()"  placeholder="chọn điểm đến">
+                    <input type="text" id="diemKT" onchange="timKiemTenDKT2()" placeholder="chọn điểm đến">
                 </div>
                 <ul id="danhSachGoiYVT2" class="dsGoiY"> </ul>
                 <div class="box-input">
@@ -65,7 +219,7 @@
                 <div class="box-input">
                     <div id="huongDan"></div>
                 </div>
-                  <hr>
+                <hr>
 
                 <!-- <div class="box-input">
                     <input type="button"  id="viTriHienTai" value="lấy vị trí hiện tại">
@@ -75,7 +229,454 @@
         web demo của <a href="https://phencoder.fun/">Đầy</a>
     </div>
 
-    <script src="./script.js"></script>
+    <script>
+        //  
+
+        const timDiaChi = document.getElementById("timDiaChi");
+        const chiDuong = document.getElementById("chiDuong");
+        var diemCanTim = document.getElementById("diemCanTim");
+        const danhSachGoiY = document.getElementById("danhSachGoiY");
+        const btn_tk = document.getElementById("btn_tk");
+        const diemBD = document.getElementById("diemBD");
+        const diemKT = document.getElementById("diemKT");
+        const danhSachGoiYVT1 = document.getElementById("danhSachGoiYVT1")
+        const danhSachGoiYVT2 = document.getElementById("danhSachGoiYVT2")
+        const thongTin_box = document.getElementById("thongTin_box")
+        var thongtinVT = document.getElementById("thongtinVT")
+        var huongDan = document.getElementById("huongDan")
+        // 
+
+        const td1 = 10.007623
+        const td2 = 105.723286
+        var marker1 = null;
+        var marker2 = null;
+        var marker3 = null;
+        var marker = null;
+        var vt1, vt2;
+        var vtCT = { lat: '', lng: '' }, vtCT1 = { lat: '', lng: '' }, vtCT2 = { lat: '', lng: '' }; // vị trí cần tìm
+        var vt = [], vtCanTim1 = [], vtCanTim2 = []
+        var popup = L.popup();
+
+        var map = L.map('map').setView([td1, td2], 13);
+
+        map.removeControl(map.zoomControl);
+
+        L.control.zoom({ position: 'topright' }).addTo(map);
+
+        L.tileLayer(`https://tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+            maxZoom: 20,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+
+        function timD() {
+
+            if (timDiaChi.style.display === "block") {
+                timDiaChi.style.display = "none"
+                thongTin_box.style.display = "block"
+                danhSachGoiY.innerHTML = ""
+                diemCanTim.value = ""
+            } else {
+                timDiaChi.style.display = "block"
+                thongTin_box.style.display = "none"
+                chiDuong.style.display = "none"
+                danhSachGoiY.innerHTML = ""
+                diemCanTim.value = ""
+            }
+        }
+
+        function thongtin() {
+
+            if (thongTin_box.style.display == "block") {
+                thongTin_box.style.display = "none"
+
+            } else {
+                thongTin_box.style.display = "block"
+                timDiaChi.style.display = "none"
+                chiDuong.style.display = "none"
+            }
+        }
+
+        function chiD() {
+
+            if (chiDuong.style.display == "block") {
+                chiDuong.style.display = "none"
+                diemBD.value = ""
+                diemKT.value = ""
+                danhSachGoiYVT1.innerHTML = ""
+                danhSachGoiYVT2.innerHTML = ""
+            } else {
+                chiDuong.style.display = "block"
+                thongTin_box.style.display = "none"
+                timDiaChi.style.display = "none"
+                thongTin_box.style.display = "none"
+            }
+        }
+
+
+        function layInforTheoDoaDo(latU, lonU, value) {
+            let urlAPI = `https://nominatim.openstreetmap.org/reverse.php?lat=${latU}&lon=${lonU}&zoom=18&format=jsonv2`
+            fetch(urlAPI)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    value(data)
+                })
+                .catch((err) => {
+                    console.log("lỗi ")
+                    value("err")
+                })
+        }
+
+
+        map.on('click', function (e) {
+            // chiDuong.style.display = "block"
+            if (marker1 === null) {
+                thongtinVT.innerHTML = ""
+                marker1 = L.marker(e.latlng).addTo(map);
+                vt1 = e.latlng
+                //console.log(marker1)
+
+                layInforTheoDoaDo(marker1._latlng.lat, marker1._latlng.lng, (data) => {
+                    if (data != "err") {
+                        diemBD.value = data.display_name
+                        console.log(data)
+                        popup.setLatLng(e.latlng).setContent(data.display_name).openOn(map);
+                        // thongTin_box.style.display = "block"
+                        thongtinVT.innerHTML =
+                            `<span class="chu">Tên hiển thị </span>: <span>${data.display_name}</span><br>` +
+                            `<span class="chu">Địa phận tỉnh thành </span>: <span>${data.address.city}</span><br>` +
+                            `<span class="chu">Huyện thành phố </span>: <span>${data.address.city_district}</span><br>` +
+                            `<span class="chu">Đường </span>: <span>${data.address.road}</span><br>` +
+                            `<span class="chu">Phường</span>: <span>${data.address.suburb}</span><br>` +
+                            `<span class="chu">Xã</span>: <span>${data.address.village}</span><br>` +
+                            `<span class="chu">Quốc gia </span>: <span>${data.address.country}</span><br>` +
+                            `<hr>` +
+                            `<span class="chu">Vĩ độ</span>: <span>${data.lat}</span><br>` +
+                            `<span class="chu">kinh độ</span>: <span>${data.lon}</span><br>`
+                    }
+                })
+
+            }
+            else if (marker2 === null) {
+                thongtinVT.innerHTML = ""
+                marker2 = L.marker(e.latlng).addTo(map);
+                vt2 = e.latlng
+                if (chiDuong.style.display == "none") {
+                    chiDuong.style.display = "block"
+                }
+                layInforTheoDoaDo(marker2._latlng.lat, marker2._latlng.lng, (data) => {
+                    if (data != "err") {
+                        diemKT.value = data.display_name
+                        console.log(data)
+                        popup.setLatLng(e.latlng).setContent(data.display_name).openOn(map);
+                        // thongTin_box.style.display = "block"
+                        thongtinVT.innerHTML =
+                            `<span class="chu">Tên hiển thị </span>: <span>${data.display_name}</span><br>` +
+                            `<span class="chu">Địa phận tỉnh thành </span>: <span>${data.address.city}</span><br>` +
+                            `<span class="chu">Huyện thành phố </span>: <span>${data.address.city_district}</span><br>` +
+                            `<span class="chu">Đường </span>: <span>${data.address.road}</span><br>` +
+                            `<span class="chu">Phường</span>: <span>${data.address.suburb}</span><br>` +
+                            `<span class="chu">Xã</span>: <span>${data.address.village}</span><br>` +
+                            `<span class="chu">Quốc gia </span>: <span>${data.address.country}</span><br>` +
+                            `<hr>` +
+                            `<span class="chu">Vĩ độ</span>: <span>${data.lat}</span><br>` +
+                            `<span class="chu">kinh độ</span>: <span>${data.lon}</span><br>`
+                    }
+                })
+            }
+            else {
+                thongtinVT.innerHTML = ""
+                map.removeLayer(marker1);
+                map.removeLayer(marker2);
+                marker1 = null;
+                marker2 = null;
+            }
+
+        });
+
+        // function timVitri(ten) {
+        //     var url = "https://nominatim.openstreetmap.org/search?format=json&q=" + ten;
+        //     fetch(url)
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //         })
+        //         .catch(error => console.error(error));
+        // }
+
+
+
+
+
+        function timKiemTen2() {
+            timKiemTen()
+        }
+
+
+        function timKiemTen() {
+            danhSachGoiY.innerHTML = ""
+            console.log(diemCanTim.value)
+            let ten = diemCanTim.value
+            var url = "https://nominatim.openstreetmap.org/search?format=json&q=" + ten;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    //console.log(data)
+                    vt = data
+                    if (data.length <= 0) {
+                        alert("không có thông tin vị trí của " + diemCanTim.value)
+                    }
+                    for (let i = 0; i < data.length; i++) {
+                        danhSachGoiY.innerHTML = danhSachGoiY.innerHTML + `<li>${data[i].display_name}</li>`
+                    }
+                    return data
+                })
+                .then((data) => {
+                    console.log(vt)
+                })
+                .catch(error => console.error(error));
+        }
+
+
+
+        danhSachGoiY.addEventListener("click", function (event) {
+            diemCanTim.value = ""
+            const clickedItem = event.target;
+            const itemValue = clickedItem.textContent;
+            diemCanTim.value = itemValue;
+            danhSachGoiY.innerHTML = ""
+            for (let i = 0; i < vt.length; i++) {
+                if (vt[i].display_name === itemValue) {
+
+                    vtCT = {
+                        lat: vt[i].lat,
+                        lng: vt[i].lon
+                    }
+
+                    marker = L.marker(vtCT).addTo(map);
+                    thongTin_box.style.display = "block"
+
+                    layInforTheoDoaDo(vt[i].lat, vt[i].lon, (data) => {
+
+
+
+                        if (data != "err") {
+
+                            thongtinVT.innerHTML =
+                                `<span class="chu">Tên hiển thị </span>: <span>${data.display_name}</span><br>` +
+                                `<span class="chu">Địa phận tỉnh thành </span>: <span>${data.address.city}</span><br>` +
+                                `<span class="chu">Huyện thành phố </span>: <span>${data.address.city_district}</span><br>` +
+                                `<span class="chu">Đường </span>: <span>${data.address.road}</span><br>` +
+                                `<span class="chu">Phường</span>: <span>${data.address.suburb}</span><br>` +
+                                `<span class="chu">Xã</span>: <span>${data.address.village}</span><br>` +
+                                `<span class="chu">Quốc gia </span>: <span>${data.address.country}</span><br>` +
+                                `<hr>` +
+                                `<span class="chu">Vĩ độ</span>: <span>${data.lat}</span><br>` +
+                                `<span class="chu">kinh độ</span>: <span>${data.lon}</span><br>`
+
+                        }
+                    })
+                }
+            }
+
+        });
+
+
+
+        function timKiemTenBD2() {
+            timKiemTenDB()
+        }
+
+
+        function timKiemTenDB() {
+            danhSachGoiYVT1.innerHTML = ""
+            console.log(diemBD.value)
+            let ten = diemBD.value
+            var url = "https://nominatim.openstreetmap.org/search?format=json&q=" + ten; //api tìm kiếm theo tên
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+
+                    console.log(data)
+                    if (data.length <= 0) {
+                        alert("không tìm thấy địa chỉ")
+                    }
+                    vtCanTim1 = data
+                    for (let i = 0; i < data.length; i++) {
+                        danhSachGoiYVT1.innerHTML = danhSachGoiYVT1.innerHTML + `<li>${data[i].display_name}</li>`
+                    }
+                    return data
+                })
+                .then((data) => {
+                    console.log(vtCanTim1)
+                })
+                .catch(error => console.error(error));
+        }
+
+
+        function timKiemTenDKT2() {
+            timKiemTenDKT()
+        }
+
+
+        function timKiemTenDKT() {
+            danhSachGoiYVT2.innerHTML = ""
+            console.log(diemKT.value)
+            let ten = diemKT.value
+            var url = "https://nominatim.openstreetmap.org/search?format=json&q=" + ten;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    vtCanTim2 = data
+                    if (data.length <= 0) {
+                        alert("không tìm thấy địa chỉ")
+                    }
+                    for (let i = 0; i < data.length; i++) {
+                        danhSachGoiYVT2.innerHTML = danhSachGoiYVT2.innerHTML + `<li>${data[i].display_name}</li>`
+                    }
+                    return data
+                })
+                .then((data) => {
+                    console.log(vtCanTim2)
+                })
+                .catch(error => console.error(error));
+        }
+
+
+        danhSachGoiYVT1.addEventListener("click", function (e) {
+            diemBD.value = ""
+            const clickedItem = event.target;
+            const itemValue = clickedItem.textContent;
+            diemBD.value = itemValue;
+            danhSachGoiYVT1.innerHTML = ""
+            for (let i = 0; i < vtCanTim1.length; i++) {
+                if (vtCanTim1[i].display_name === itemValue) {
+                    vtCT1 = {
+                        lat: vtCanTim1[i].lat,
+                        lng: vtCanTim1[i].lon
+                    }
+                }
+            }
+
+            marker1 = L.marker(vtCT1).addTo(map);
+            vt1 = e.latlng
+
+            // var markerTemp = marker
+
+            // if(marker === null){
+            //     marker = L.marker(vtCT).addTo(map);
+            // }
+            // else{
+            //     map.removeLayer(markerTemp);
+            // }
+
+        });
+
+        danhSachGoiYVT2.addEventListener("click", function (e) {
+            diemKT.value = ""
+            const clickedItem = event.target;
+            const itemValue = clickedItem.textContent;
+            diemKT.value = itemValue;
+            danhSachGoiYVT2.innerHTML = ""
+            for (let i = 0; i < vtCanTim2.length; i++) {
+                if (vtCanTim2[i].display_name === itemValue) {
+                    vtCT2 = {
+                        lat: vtCanTim2[i].lat,
+                        lng: vtCanTim2[i].lon
+                    }
+                }
+            }
+
+            marker2 = L.marker(vtCT2).addTo(map);
+            vt2 = e.latlng
+
+            // var markerTemp = marker
+
+            // if(marker === null){
+            //     marker = L.marker(vtCT).addTo(map);
+            // }
+            // else{
+            //     map.removeLayer(markerTemp);
+            // }
+
+        });
+
+        // diemBD.addEventListener('click', function (e) {
+        //     marker1 = L.marker(e.latlng).addTo(map);
+        //     layInforTheoDoaDo(marker1._latlng.lat, marker1._latlng.lng, (data) => {
+        //         if (data != "err") {
+        //             diemBD.value = data.display_name
+        //             console.log(data)
+        //             popup.setLatLng(e.latlng).setContent(data.display_name).openOn(map);
+        //         }
+        //     })
+
+        // })
+
+        // diemKT.addEventListener('click', function (e) {
+        //     console.log(e.latlng)
+        //     marker2 = L.marker(e.latlng).addTo(map);
+        //     layInforTheoDoaDo(marker2._latlng.lat, marker2._latlng.lng, (data) => {
+        //         if (data != "err") {
+        //             diemKT.value = data.display_name
+        //             console.log(data)
+        //             popup.setLatLng(e.latlng).setContent(data.display_name).openOn(map);
+        //         }
+        //     })
+
+        // })
+
+
+        function timDuongDi() {
+
+            if (marker1 === null || marker2 === null) {
+                alert("chưa chọn địa điểm")
+            }
+            else {
+
+                var bounds = new L.LatLngBounds(marker1._latlng, marker2._latlng);
+                map.fitBounds(bounds);
+
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(marker1._latlng),
+                        L.latLng(marker2._latlng)
+                    ]
+                }).addTo(map);
+
+
+                huongDan.innerHTML = "di con trỏ vào đường hướng dẫn màu đỏ sao đó vừa nấm và kéo thả vào vị trí cần đến <br> hoặt nấm và kéo thả nút tích chọn vào vị trí mới"
+
+
+            }
+        }
+
+
+
+        function reset() {
+            location.reload();
+        }
+        map.on('contextmenu', function (e) {
+            chiDuong.style.display == "block"
+            console.log(vt1)
+            if (vt1 === undefined) {
+                alert('chưa chọn địa điểm')
+            }
+            else {
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(vt1),
+                        L.latLng(vt2)
+                    ]
+                }).addTo(map);
+                huongDan.innerHTML = "di con trỏ vào đường hướng dẫn màu đỏ sao đó vừa nấm và kéo thả vào vị trí cần đến <br> hoặt nấm và kéo thả nút tích chọn vào vị trí mới"
+
+            }
+
+        });
+    </script>
 </body>
 
 </html>
